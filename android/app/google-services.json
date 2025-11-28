@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "270592354754",
+    "project_id": "yell-edb81",
+    "storage_bucket": "yell-edb81.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270592354754:android:7e54cd7197599f36bfce5b",
+        "android_client_info": {
+          "package_name": "com.example.yell"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAx0K4KHWk6CYFqAzMQFQuHYiKJEMV2swc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
