@@ -22,8 +22,8 @@ class SignUpHeader extends StatelessWidget {
         Text(
           'Sign up to get started',
           style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
+            fontSize: 15,
+            fontWeight: FontWeight.w900,
             fontFamily: 'AM',
             color: Theme.of(context).textTheme.bodyMedium!.color!.withValues(alpha: 0.7),
           ),

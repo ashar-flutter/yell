@@ -4,7 +4,8 @@ export 'package:flutter/material.dart';
 export 'package:yell/feature/screens/auth/navigation/auth_navigation.dart';
 export 'package:yell/core/validators/auth_validation.dart';
 
-
+// services
+export '../../../core/service/auth/auth_service.dart';
 
 
 // sign in
@@ -30,11 +31,14 @@ export  'package:fluttertoast/fluttertoast.dart';
 
 // firebase..
 export 'package:firebase_core/firebase_core.dart';
+export 'package:firebase_auth/firebase_auth.dart';
+export 'package:cloud_firestore/cloud_firestore.dart';
 
 // widgets
 export 'package:yell/feature/screens/onboarding/pages/onboard_button.dart';
 
 // core uses
+export '../../../../core/validators/toast_message.dart';
 export 'package:yell/core/gap/am_gap.dart';
 export '../color/am_color.dart';
 export '../../../core/image/am_images.dart';
@@ -59,3 +63,15 @@ export 'package:yell/feature/animation/onboarding_animation.dart';
 
 //packages..
 export 'package:smooth_page_indicator/smooth_page_indicator.dart';
+export  'package:bloc/bloc.dart';
+export'package:flutter_bloc/flutter_bloc.dart';
+
+
+
+export "package:yell/feature/controller/auth/bloc/auth_bloc.dart";
+export "package:yell/feature/controller/auth/bloc/auth_event.dart";
+export "package:yell/feature/controller/auth/bloc/auth_state.dart";
+
+
+//repositories
+export 'package:yell/feature/repository/auth_repo/auth_repository.dart';

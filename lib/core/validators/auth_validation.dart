@@ -17,7 +17,6 @@ class AuthValidation {
       return false;
     }
 
-    // Email validation
     if (email.isEmpty) {
       ToastMessage.show(
         context: context,

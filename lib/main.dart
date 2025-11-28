@@ -1,4 +1,5 @@
 import 'package:yell/core/barrel/barrel.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -10,14 +11,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'yell',
-      theme: AMTheme.lightTheme,
-      darkTheme: AMTheme.darkTheme,
-      themeMode: ThemeMode.system,
-      initialRoute: AMRoutes.login,
-      onGenerateRoute: YellRouter.generateRoute,
+    return BlocProvider(
+      create: (context) => AuthBloc(authRepository: AuthRepository()),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'yell',
+        theme: AMTheme.lightTheme,
+        darkTheme: AMTheme.darkTheme,
+        themeMode: ThemeMode.system,
+        initialRoute: AMRoutes.main,
+        onGenerateRoute: YellRouter.generateRoute,
+      ),
     );
   }
 }

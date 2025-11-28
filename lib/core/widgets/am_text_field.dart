@@ -31,7 +31,7 @@ class _AMTextFieldState extends State<AMTextField> {
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 25),
-      height: 50,
+      height: 45,
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
@@ -70,17 +70,18 @@ class _AMTextFieldState extends State<AMTextField> {
             color: Theme.of(
               context,
             ).textTheme.bodyMedium!.color!.withValues(alpha: 0.6),
-            fontSize: 14,
+            fontSize: 13,
             fontFamily: "AM",
           ),
           prefixIcon: widget.prefixIcon,
           suffixIcon: widget.isPassword
               ? IconButton(
-                  icon: Icon(
+            icon: Icon(
+                    size: 20,
                     _obscureText
                         ? Icons.visibility_off_outlined
                         : Icons.visibility_outlined,
-                    color: isDark ? Colors.white : Colors.black87,
+                    color: isDark ? Colors.white : Colors.black54,
                   ),
                   onPressed: () {
                     setState(() {

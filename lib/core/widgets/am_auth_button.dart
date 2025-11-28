@@ -76,8 +76,8 @@ class _AMAuthButtonState extends State<AMAuthButton>
               borderRadius: BorderRadius.circular(16),boxShadow: [
               BoxShadow(
                 color: isDark
-                    ? AMColors.navyBlue.withOpacity(0.3)
-                    : AMColors.royalBlue.withOpacity(0.3),
+                    ? AMColors.navyBlue.withValues(alpha: 0.3)
+                    : AMColors.royalBlue.withValues(alpha: 0.3),
                 blurRadius: 6,
                 offset: const Offset(0, 2),
               ),

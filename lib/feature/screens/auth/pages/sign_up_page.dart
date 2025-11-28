@@ -38,6 +38,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     _nameFocusNode.dispose();
     _emailFocusNode.dispose();
     _passwordFocusNode.dispose();
@@ -47,57 +50,89 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        body: SingleChildScrollView(
-          controller: _scrollController,
-          child: Column(
-            children: [
-              SignUpHeader(),
-              SignUpNameField(
-                controller: _nameController,
-                focusNode: _nameFocusNode,
-                onSubmitted: () {
-                  AuthHelper.moveToNextField(context, _emailFocusNode);
-                },
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is AuthError) {
+          ToastMessage.show(
+            context: context,
+            message: state.message,
+            isError: true,
+          );
+        }
+        if (state is AuthSuccess) {
+          ToastMessage.show(
+            context: context,
+            message: 'Account created successfully!',
+            isError: false,
+          );
+        }
+      },
+      builder: (context, state) {
+        return GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Scaffold(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            body: SingleChildScrollView(
+              controller: _scrollController,
+              child: Column(
+                children: [
+                  SignUpHeader(),
+                  SignUpNameField(
+                    controller: _nameController,
+                    focusNode: _nameFocusNode,
+                    onSubmitted: () {
+                      AuthHelper.moveToNextField(context, _emailFocusNode);
+                    },
+                  ),
+                  SignUpEmailField(
+                    controller: _emailController,
+                    focusNode: _emailFocusNode,
+                    onSubmitted: () {
+                      AuthHelper.moveToNextField(context, _passwordFocusNode);
+                    },
+                  ),
+                  SignUpPasswordField(
+                    controller: _passwordController,
+                    focusNode: _passwordFocusNode,
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                  if (state is AuthLoading)
+                    CircularProgressIndicator(
+                    )
+                  else
+                    AMAuthButton(
+                      text: 'Sign Up',
+                      onPressed: () {
+                        if (AuthValidation.validateSignUp(
+                          context: context,
+                          name: _nameController.text,
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        )) {
+                          context.read<AuthBloc>().add(
+                            SignUpEvent(
+                              name: _nameController.text,
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                  SignUpFooter(
+                    onSignInTap: () {
+                      AuthNavigation.navigateToLogin(context);
+                    },
+                  ),
+                  SignUpDivider(),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                ],
               ),
-              SignUpEmailField(
-                controller: _emailController,
-                focusNode: _emailFocusNode,
-                onSubmitted: () {
-                  AuthHelper.moveToNextField(context, _passwordFocusNode);
-                },
-              ),
-              SignUpPasswordField(
-                controller: _passwordController,
-                focusNode: _passwordFocusNode,
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-              AMAuthButton(
-                text: 'Sign Up',
-                onPressed: () {
-                  AuthValidation.validateSignUp(
-                    context: context,
-                    name: _nameController.text,
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                  );
-                },
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-              SignUpFooter(
-                onSignInTap: () {
-                  AuthNavigation.navigateToLogin(context);
-                },
-              ),
-              SignUpDivider(),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

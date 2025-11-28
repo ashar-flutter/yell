@@ -6,7 +6,7 @@ class SignUpDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25),
+      padding: EdgeInsets.symmetric(horizontal: 45),
       child: Row(
         children: [
           Expanded(
@@ -22,7 +22,7 @@ class SignUpDivider extends StatelessWidget {
             child: Text(
               'or continue with',
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 13,
                 fontWeight: FontWeight.w500,
                 fontFamily: 'AM',
                 color: Theme.of(

@@ -4,30 +4,57 @@ class YellRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AMRoutes.splash:
-        return _buildRoute(const SplashScreen());
+        return _crossFadeRoute(const SplashScreen());
+
       case AMRoutes.main:
-        return _buildRoute(const MainPage());
+        return _crossFadeRoute(const MainPage());
+
       case AMRoutes.login:
-        return _buildRoute(const LoginPage());
+        return _crossFadeRoute(const LoginPage());
+
       case AMRoutes.signUp:
-        return _buildRoute(const SignUpPage());
+        return _crossFadeRoute(const SignUpPage());
 
       default:
-        return _buildRoute(
+        return _crossFadeRoute(
           Scaffold(
-            body: Center(child: Text('No route defined for ${settings.name}')),
+            body: Center(
+              child: Text('No route defined for ${settings.name}'),
+            ),
           ),
         );
     }
   }
 
-  static PageRouteBuilder _buildRoute(Widget page) {
+  /// PERFECT CROSS-FADE (old fades out + new fades in)
+  static PageRouteBuilder _crossFadeRoute(Widget page) {
     return PageRouteBuilder(
+      transitionDuration: const Duration(milliseconds: 350),
+      reverseTransitionDuration: const Duration(milliseconds: 350),
+      opaque: false,
       pageBuilder: (context, animation, secondaryAnimation) => page,
+
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return child;
+
+        final fadeIn = CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeInOut,
+        );
+
+
+        final fadeOut = CurvedAnimation(
+          parent: secondaryAnimation,
+          curve: Curves.easeOut,
+        );
+
+        return FadeTransition(
+          opacity: fadeIn,         // new screen fade in
+          child: FadeTransition(
+            opacity: ReverseAnimation(fadeOut), // old screen fade out
+            child: child,
+          ),
+        );
       },
-      transitionDuration: Duration.zero,
     );
   }
 }

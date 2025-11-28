@@ -36,7 +36,7 @@ class SignUpNameField extends StatelessWidget {
         SizedBox(height: size.height * 0.015),
         AMTextField(
           controller: controller,
-          hintText: 'Enter your full name',
+          hintText: 'Enter your full name...',
           prefixIcon: Icon(Icons.person_outline_rounded, size: 20),
           isPassword: false,
           focusNode: focusNode,

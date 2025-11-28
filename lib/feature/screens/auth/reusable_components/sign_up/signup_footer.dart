@@ -17,9 +17,9 @@ class SignUpFooter extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Already have an account? ',
+            'already have an account?  ',
             style: TextStyle(
-              fontSize: 15,
+              fontSize: 14,
               fontWeight: FontWeight.w500,
               fontFamily: 'AM',
               color: Theme.of(
@@ -29,7 +29,7 @@ class SignUpFooter extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              HapticFeedback.lightImpact(); // Vibration feel
+              HapticFeedback.lightImpact();
               onSignInTap();
             },
             child: Container(
@@ -37,7 +37,7 @@ class SignUpFooter extends StatelessWidget {
               child: Text(
                 'Sign In',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 17,
                   fontWeight: FontWeight.w900,
                   fontFamily: 'bold',
                   color: isDark ? AMColors.white : AMColors.black,

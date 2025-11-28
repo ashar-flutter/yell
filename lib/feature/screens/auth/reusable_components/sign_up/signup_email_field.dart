@@ -36,7 +36,7 @@ class SignUpEmailField extends StatelessWidget {
         SizedBox(height: size.height * 0.015),
         AMTextField(
           controller: controller,
-          hintText: 'Enter your email',
+          hintText: 'Enter your email...',
           prefixIcon: Icon(Icons.alternate_email_rounded, size: 20),
           isPassword: false,
           focusNode: focusNode,

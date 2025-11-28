@@ -34,7 +34,7 @@ class SignUpPasswordField extends StatelessWidget {
         SizedBox(height: size.height * 0.015),
         AMTextField(
           controller: controller,
-          hintText: 'Create your password',
+          hintText: 'Create your password...',
           prefixIcon: Icon(Icons.lock_outline_rounded, size: 20),
           isPassword: true,
           focusNode: focusNode,
