@@ -1,4 +1,5 @@
 import 'package:yell/core/barrel/barrel.dart';
+import 'feature/controller/dashboard/bloc/dashboard_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,8 +12,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthBloc(authRepository: AuthRepository()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(
+          create: (context) => AuthBloc(authRepository: AuthRepository()),
+        ),
+        BlocProvider<DashboardBloc>(
+          create: (context) => DashboardBloc(
+          ),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'yell',

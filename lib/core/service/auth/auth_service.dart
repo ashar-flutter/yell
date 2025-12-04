@@ -18,6 +18,8 @@ class AuthService {
         'uid': userCredential.user!.uid,
         'name': name,
         'email': email,
+        'profilePic': '',
+        'role': '',
         'createdAt': FieldValue.serverTimestamp(),
       });
 
@@ -38,6 +40,22 @@ class AuthService {
       );
 
       return userCredential.user;
+    } catch (e) {
+      rethrow;
+    }
+  }
+  Future<void> updateUserProfile({
+    required String uid,
+    required String role,
+    String profilePic = '',
+  }) async {
+    try {
+      await _firestore.collection('auth').doc(uid).update({
+        'role': role,
+        if (profilePic.isNotEmpty) 'profilePic': profilePic,
+        'profileCompleted': true,
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
     } catch (e) {
       rethrow;
     }

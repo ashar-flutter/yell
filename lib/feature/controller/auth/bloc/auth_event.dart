@@ -21,3 +21,14 @@ class SignInEvent extends AuthEvent {
     required this.password,
   });
 }
+class UpdateProfileEvent extends AuthEvent {
+  final String uid;
+  final String role;
+  final String profilePic;
+
+  UpdateProfileEvent({
+    required this.uid,
+    required this.role,
+    required this.profilePic,
+  });
+}

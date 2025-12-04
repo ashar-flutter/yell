@@ -1,12 +1,14 @@
 import 'package:yell/core/barrel/barrel.dart';
+
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository _authRepository;
 
   AuthBloc({required AuthRepository authRepository})
-      : _authRepository = authRepository,
-        super(AuthInitial()) {
+    : _authRepository = authRepository,
+      super(AuthInitial()) {
     on<SignUpEvent>(_onSignUp);
     on<SignInEvent>(_onSignIn);
+    on<UpdateProfileEvent>(_onUpdateProfile);
   }
 
   Future<void> _onSignUp(SignUpEvent event, Emitter<AuthState> emit) async {
@@ -39,6 +41,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } else {
         emit(AuthError(message: 'Sign in failed'));
       }
+    } catch (e) {
+      emit(AuthError(message: e.toString()));
+    }
+  }
+  Future<void> _onUpdateProfile(
+      UpdateProfileEvent event,
+      Emitter<AuthState> emit,
+      ) async {
+    emit(AuthLoading());
+    try {
+      await _authRepository.updateProfile(
+        uid: event.uid,
+        role: event.role,
+        profilePic: event.profilePic,
+      );
+      emit(UpdateProfileSuccess(role: event.role,uid: event.uid));
     } catch (e) {
       emit(AuthError(message: e.toString()));
     }

@@ -1,4 +1,5 @@
 import 'package:yell/core/barrel/barrel.dart';
+import '../../dashboard/provider/provider_service_selection_screen.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -15,6 +16,58 @@ class _SignUpPageState extends State<SignUpPage> {
   final FocusNode _nameFocusNode = FocusNode();
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
+
+  Future<void> _navigateDirectlyFromDialog(
+      BuildContext context,
+      String role,
+      String uid,
+      ) async {
+    if (!context.mounted) return;
+
+    if (role == 'Service Provider') {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => ProviderServiceSelectionScreen(uid: uid),
+
+        ),
+            (route) => false,
+      );
+    } else if (role == 'Service Consumer') {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => ServiceConsumerDashboard(
+            userId: uid,
+          ),
+        ),
+            (route) => false,
+      );
+    }
+  }
+
+  void _showProfileDialog(BuildContext context, String uid) {
+    Future.delayed(Duration(milliseconds: 500), () {
+      if (!context.mounted) return;
+
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (dialogContext) => ProfileDialog(
+          onSavePressed: (result) async {
+            if (result['role']!.isNotEmpty && context.mounted) {
+              context.read<AuthBloc>().add(
+                UpdateProfileEvent(
+                  uid: uid,
+                  role: result['role']!,
+                  profilePic: result['profilePic'] ?? '',
+                ),
+              );
+            }
+            return Future.value();
+          },
+        ),
+      );
+    });
+  }
 
   @override
   void initState() {
@@ -58,6 +111,7 @@ class _SignUpPageState extends State<SignUpPage> {
             message: state.message,
             isError: true,
           );
+          Navigator.pop(context);
         }
         if (state is AuthSuccess) {
           ToastMessage.show(
@@ -65,6 +119,10 @@ class _SignUpPageState extends State<SignUpPage> {
             message: 'Account created successfully!',
             isError: false,
           );
+          _showProfileDialog(context, state.uid);
+        }
+        if (state is UpdateProfileSuccess) {
+          _navigateDirectlyFromDialog(context, state.role, state.uid);
         }
       },
       builder: (context, state) {
@@ -97,8 +155,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                   if (state is AuthLoading)
-                    CircularProgressIndicator(
-                    )
+                    CircularProgressIndicator()
                   else
                     AMAuthButton(
                       text: 'Sign Up',

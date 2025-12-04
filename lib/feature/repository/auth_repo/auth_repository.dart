@@ -1,6 +1,5 @@
 import '../../../core/barrel/barrel.dart';
 
-
 class AuthRepository {
   final AuthService _authService = AuthService();
 
@@ -36,7 +35,21 @@ class AuthRepository {
     }
   }
 
-
+  Future<void> updateProfile({
+    required String uid,
+    required String role,
+    required String profilePic,
+  }) async {
+    try {
+      await _authService.updateUserProfile(
+        uid: uid,
+        role: role,
+        profilePic: profilePic,
+      );
+    } catch (e) {
+      throw _handleError(e);
+    }
+  }
 
   String _handleError(dynamic error) {
     if (error is FirebaseAuthException) {
